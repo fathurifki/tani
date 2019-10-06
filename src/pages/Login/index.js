@@ -30,7 +30,7 @@ class Login extends Component {
             Not Register Yet ?
             <Text
               style={styles.highlight}
-              onPress={() => this.props.navigation.navigate('register')}>
+              onPress={() => this.props.navigation.navigate('home')}>
               {' '}
               Sign Up{' '}
             </Text>
@@ -38,7 +38,10 @@ class Login extends Component {
           </Text>
         </View>
         <View style={styles.button}>
-          <Button onPress={console.log('Button')} title="Login" />
+          <Button
+            onPress={() => this.props.navigation.navigate('home')}
+            title="Login"
+          />
         </View>
       </View>
     );
