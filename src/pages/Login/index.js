@@ -2,8 +2,12 @@ import React, {Component} from 'react';
 import {View, Text, StyleSheet, Dimensions} from 'react-native';
 import {Item, Form, Input, Label} from 'native-base';
 import {Button} from 'react-native-elements';
+import {connect} from 'react-redux';
+import * as actions from './actions';
+
 class Login extends Component {
   render() {
+    const {setData} = this.props;
     return (
       <View style={styles.container}>
         <View style={styles.header}>
@@ -83,4 +87,7 @@ const styles = StyleSheet.create({
   },
 });
 
-export default Login;
+export default connect(
+  null,
+  actions,
+)(Login);
