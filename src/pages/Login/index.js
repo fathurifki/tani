@@ -7,7 +7,7 @@ import * as actions from './actions';
 
 class Login extends Component {
   render() {
-    const {setData} = this.props;
+    const {dataLogin, setData} = this.props;
     return (
       <View style={styles.container}>
         <View style={styles.header}>
@@ -18,13 +18,13 @@ class Login extends Component {
           <View style={styles.input}>
             <Item floatingLabel>
               <Label>Email</Label>
-              <Input onChangeText={console.log('input')} />
+              <Input onChangeText={text => setData('email', text)} />
             </Item>
             <Item floatingLabel>
               <Label>Password</Label>
               <Input
-                secureTextEntry={true}
-                onChangeText={console.log('password')}
+                // secureTextEntry={true}
+                onChangeText={text => setData('password', text)}
               />
             </Item>
           </View>
@@ -34,7 +34,7 @@ class Login extends Component {
             Not Register Yet ?
             <Text
               style={styles.highlight}
-              onPress={() => this.props.navigation.navigate('home')}>
+              onPress={() => this.props.navigation.navigate('register')}>
               {' '}
               Sign Up{' '}
             </Text>
@@ -42,10 +42,7 @@ class Login extends Component {
           </Text>
         </View>
         <View style={styles.button}>
-          <Button
-            onPress={() => this.props.navigation.navigate('home')}
-            title="Login"
-          />
+          <Button onPress={() => dataLogin()} title="Login" />
         </View>
       </View>
     );

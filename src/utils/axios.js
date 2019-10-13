@@ -1,8 +1,7 @@
 import axios from 'axios';
-import url from './url';
 
 const axiosApi = axios.create({
-  baseURL: url,
+  baseURL: `https://etani.herokuapp.com/api`,
   timeout: 20000,
 });
 
