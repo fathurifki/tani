@@ -7,6 +7,7 @@ import {
   DATA_LOGIN,
 } from './constants';
 import axios from '../../utils/axios';
+import {authApi} from '../../utils/services';
 
 export function setErrors(errors) {
   return {
@@ -36,18 +37,13 @@ export function clearLogin() {
   };
 }
 
-export const dataLogin = data => (dispatch, getState) => {
-  const state = getState().login.loginDetail;
-
+export const dataLogin = () => (dispatch, getState) => {
+  const state = getState().login;
   const {email, password} = state;
-
-  axios
-    .post(`/user/login`, {
-      data: {
-        email,
-        password,
-      },
-    })
+  console.log('STATE', state, email, password);
+  // Axios.post( authApi, {email, password})
+  authApi
+    .login({email, password})
     .then(response => {
       if (response) {
         console.log('SUKSES LOGIN');
