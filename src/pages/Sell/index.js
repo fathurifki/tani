@@ -17,7 +17,6 @@ export default class Sell extends Component {
           <Text>Tambah Produk</Text>
           <View>
             <Card>
-              <Text>Gambar</Text>
               <Text>Nama Penjual</Text>
               <TextInput
                 underlineColorAndroid="rgb(255,0,0)"

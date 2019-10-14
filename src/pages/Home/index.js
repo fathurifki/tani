@@ -1,40 +1,53 @@
 import React, {Component} from 'react';
-import {
-  View,
-  FlatList,
-  StyleSheet,
-  Dimensions,
-  Image,
-  ScrollView,
-} from 'react-native';
-import {Header, Card, Icon, ListItem, Text} from 'react-native-elements';
-import {Container, Content, Footer, FooterTab, Item, Button} from 'native-base';
+import {View, FlatList, StyleSheet, Dimensions, ScrollView} from 'react-native';
+import {Header, Card, Text} from 'react-native-elements';
+import {Container, Content, Footer, FooterTab, Button} from 'native-base';
 import CardComponent from '../../components/Card';
+import {connect} from 'react-redux';
+import {createStructuredSelector} from 'reselect';
+import * as actions from './actions';
+import * as selectors from './seletcors';
+import {Assets} from '../../asset';
 
 const dummy = [
   {
     id: 1,
     product: 'palawija',
+    image: Assets.palawija,
   },
   {
     id: 2,
     product: 'beras',
+    image: Assets.beras,
   },
   {
     id: 3,
     product: 'buah',
+    image: Assets.buah,
   },
   {
     id: 4,
     product: 'perkebunan',
+    image: Assets.kopi,
   },
 ];
 
 class Home extends Component {
-  keyExtractor = () => item => item.id;
+  componentDidMount() {
+    const {home} = this.props;
+    home();
+  }
 
-  renderItem = ({item}) => <CardComponent name={item.product} />;
+  renderItem = ({item}) => (
+    <CardComponent
+      name={item.product}
+      image={item.image}
+      onPress={() => this.props.navigation.navigate('category')}
+    />
+  );
   render() {
+    const {data} = this.props;
+    console.log('DATA', data);
     return (
       <Container style={styles.container}>
         <Header
@@ -58,7 +71,7 @@ class Home extends Component {
                 vertical
                 style={{height: Dimensions.get('window').width * 1}}
                 data={dummy}
-                keyExtractor={this.keyExtractor}
+                keyExtractor={(item, index) => index.toString()}
                 renderItem={item => this.renderItem(item)}
               />
             </View>
@@ -100,4 +113,11 @@ const styles = StyleSheet.create({
   },
 });
 
-export default Home;
+const mapStateToProps = createStructuredSelector({
+  data: selectors.getData(),
+});
+
+export default connect(
+  mapStateToProps,
+  actions,
+)(Home);
