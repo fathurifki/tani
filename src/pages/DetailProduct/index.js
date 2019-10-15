@@ -2,6 +2,7 @@ import React, {Component} from 'react';
 import {View, Dimensions, ScrollView} from 'react-native';
 import {Header, Card, Text, Image} from 'react-native-elements';
 import {Container, Button} from 'native-base';
+import {Assets} from '../../asset';
 
 export default class DetailProduct extends Component {
   render() {
@@ -26,7 +27,8 @@ export default class DetailProduct extends Component {
                   width: 150,
                   height: 150,
                   margin: 5,
-                }}></Image>
+                }}
+                source={Assets.palawija}></Image>
             </View>
             <View>
               <Text style={{margin: 5}}>Harga :</Text>
@@ -87,10 +89,7 @@ export default class DetailProduct extends Component {
           </View>
           <View>
             <Card style={{weight: 100, height: 100}}>
-              <Text>
-                Lorem ipsum dolor sit amet, consectetur adipiscing elit. Aenean
-                tellus urna, vestibulum a tincidunt eu, aliquam a velit.
-              </Text>
+              <Text>DiJual Palawija kualitas Super duper segar</Text>
             </Card>
           </View>
         </ScrollView>

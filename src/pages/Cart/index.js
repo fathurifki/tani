@@ -8,6 +8,7 @@ import {
 } from 'react-native';
 import {Header, Card, Text} from 'react-native-elements';
 import {Container, Button, Icon} from 'native-base';
+import {Assets} from '../../asset';
 
 const DEVICE_WIDTH = Dimensions.get('window').width;
 
@@ -31,6 +32,7 @@ export default class Cart extends Component {
                     height: 80,
                     margin: 5,
                   }}
+                  source={Assets.palawija}
                 />
                 <View style={{flexDirection: 'column'}}>
                   <View style={{width: DEVICE_WIDTH * 0.3}}>

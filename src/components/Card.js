@@ -12,7 +12,7 @@ export default class CardComponent extends Component {
   render() {
     return (
       <TouchableOpacity onPress={this.props.onPress}>
-        <Card title={this.props.name} image={{uri: this.props.image}}>
+        <Card title={this.props.name} image={this.props.image}>
           <Text style={{marginBottom: 10}}>{this.props.category}</Text>
           <Button
             backgroundColor="#03A9F4"

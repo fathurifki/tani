@@ -10,30 +10,41 @@ import {
 import {Header, Card, Icon, ListItem, Text} from 'react-native-elements';
 import {Container, Content, Footer, FooterTab, Item, Button} from 'native-base';
 import CardComponent from '../../components/Card';
+import {Assets} from '../../asset';
 
 const dummy = [
   {
     id: 1,
-    product: 'palawija',
+    product: 'Palawija',
+    image: Assets.palawija,
   },
   {
     id: 2,
-    product: 'beras',
+    product: 'Palawija Mantap',
+    image: Assets.palawija,
   },
   {
     id: 3,
-    product: 'buah',
+    product: 'Palawija Segar',
+    image: Assets.palawija,
   },
   {
     id: 4,
-    product: 'perkebunan',
+    product: 'Palawija Super',
+    image: Assets.palawija,
   },
 ];
 
 class Home extends Component {
   keyExtractor = () => item => item.id;
 
-  renderItem = ({item}) => <CardComponent name={item.product} />;
+  renderItem = ({item}) => (
+    <CardComponent
+      name={item.product}
+      image={item.image}
+      onPress={() => this.props.navigation.navigate('detailproduct')}
+    />
+  );
   render() {
     return (
       <Container style={styles.container}>
@@ -46,7 +57,7 @@ class Home extends Component {
             <FlatList
               vertical
               data={dummy}
-              keyExtractor={this.keyExtractor}
+              keyExtractor={(item, index) => index.toString()}
               renderItem={item => this.renderItem(item)}
             />
           </View>

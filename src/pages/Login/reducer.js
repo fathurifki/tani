@@ -12,6 +12,7 @@ const initialState = {
   isLoading: false,
   dataLogin: {},
   loginDetail: {},
+  token: {},
 };
 
 const LoginReducer = (state = initialState, action) => {

@@ -16,9 +16,9 @@ class PickerProduct extends Component {
     return (
       <View>
         <Picker selectedValue={this.state.user} onValueChange={this.updateUser}>
-          <Picker.Item label="Steve" value="steve" />
-          <Picker.Item label="Ellen" value="ellen" />
-          <Picker.Item label="Maria" value="maria" />
+          <Picker.Item label="Palawija" value="steve" />
+          <Picker.Item label="Beras" value="ellen" />
+          <Picker.Item label="Buah" value="maria" />
         </Picker>
       </View>
     );

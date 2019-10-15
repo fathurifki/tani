@@ -1,13 +1,6 @@
-import {
-  SET_DATA,
-  SET_ERROR,
-  SET_LOADING,
-  SEND_REQUEST,
-  CLEAR_LOGIN,
-  DATA_LOGIN,
-} from './constants';
-import axios from '../../utils/axios';
-import {authApi} from '../../utils/services';
+import {SET_DATA, SET_ERROR, SET_LOADING, CLEAR_LOGIN} from './constants';
+import {authApi} from '../../services/api/auth';
+import NavigationService from '../../NavigationService';
 
 export function setErrors(errors) {
   return {
@@ -40,13 +33,13 @@ export function clearLogin() {
 export const dataLogin = () => (dispatch, getState) => {
   const state = getState().login;
   const {email, password} = state;
-  console.log('STATE', state, email, password);
-  // Axios.post( authApi, {email, password})
+
   authApi
     .login({email, password})
     .then(response => {
       if (response) {
-        console.log('SUKSES LOGIN');
+        dispatch(setData('token', response.data));
+        NavigationService.navigate('home');
       }
     })
     .catch(error => {
