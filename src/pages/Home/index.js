@@ -42,12 +42,13 @@ class Home extends Component {
     <CardComponent
       name={item.product}
       image={item.image}
+      category={item.category}
       onPress={() => this.props.navigation.navigate('category')}
     />
   );
   render() {
     const {data} = this.props;
-    console.log('DATA', data);
+    console.log('DATA HOME', data);
     return (
       <Container style={styles.container}>
         <Header
@@ -70,8 +71,8 @@ class Home extends Component {
               <FlatList
                 vertical
                 style={{height: Dimensions.get('window').width * 1}}
-                data={dummy}
-                keyExtractor={(item, index) => index.toString()}
+                data={data}
+                keyExtractor={(item, index) => item.category.toString()}
                 renderItem={item => this.renderItem(item)}
               />
             </View>
