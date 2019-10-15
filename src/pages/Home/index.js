@@ -43,7 +43,12 @@ class Home extends Component {
       name={item.product}
       image={item.image}
       category={item.category}
-      onPress={() => this.props.navigation.navigate('category')}
+      onPress={() =>
+        this.props.navigation.navigate({
+          routeName: 'category',
+          params: {category: item.category},
+        })
+      }
     />
   );
   render() {

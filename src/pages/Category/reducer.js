@@ -1,6 +1,8 @@
 import {SET_DATA, SET_LOADING, SET_ERROR} from './constants';
 
-const initialState = {};
+const initialState = {
+  categoryData: [],
+};
 
 const CategoryReducer = (state = initialState, action) => {
   switch (action.type) {

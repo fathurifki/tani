@@ -27,14 +27,10 @@ export const home = () => (dispatch, getState) => {
   const state = getState().login;
   const {token} = state;
 
-  console.log('STATE', state);
-  console.log('TOKEN', token.token);
-
   homeApi
     .home(token.token)
     .then(response => {
       if (response) {
-        console.log('DATA FETCH', response.data);
         dispatch(setData('product', response.data));
         console.log('SUKSES FETCH');
       }
