@@ -1,11 +1,27 @@
 import React, {Component} from 'react';
-import {View, Dimensions, ScrollView} from 'react-native';
+import {View, ScrollView, TextInput} from 'react-native';
 import {Header, Card, Text, Image} from 'react-native-elements';
 import {Container, Button} from 'native-base';
 import {Assets} from '../../asset';
+import {connect} from 'react-redux';
+import * as actions from './actions';
+import * as selectors from './selectors';
+import {createStructuredSelector} from 'reselect';
 
-export default class DetailProduct extends Component {
+class DetailProduct extends Component {
+  componentDidMount() {
+    const {fetchDetail, navigation} = this.props;
+    fetchDetail(navigation.state.params.id);
+  }
+
+  handleRequest = () => {
+    const {requestBuy, navigation} = this.props;
+    requestBuy(navigation.state.params.id);
+  };
+
   render() {
+    const {data, setData} = this.props;
+    console.log('DATA', data);
     return (
       <Container>
         <Header
@@ -44,8 +60,7 @@ export default class DetailProduct extends Component {
                   fontStyle: 'italic',
                   margin: 5,
                 }}>
-                {' '}
-                20.000
+                {data.price}
               </Text>
               <Text
                 style={{
@@ -54,8 +69,7 @@ export default class DetailProduct extends Component {
                   fontStyle: 'italic',
                   margin: 5,
                 }}>
-                {' '}
-                200
+                {data.stock}
               </Text>
               <Text
                 style={{
@@ -64,8 +78,7 @@ export default class DetailProduct extends Component {
                   fontStyle: 'italic',
                   margin: 5,
                 }}>
-                {' '}
-                5 <Text>Kg</Text>
+                {data.weight}
               </Text>
               <Text
                 style={{
@@ -74,26 +87,29 @@ export default class DetailProduct extends Component {
                   fontStyle: 'italic',
                   margin: 5,
                 }}>
-                {' '}
-                Palawija
+                {data.category}
               </Text>
             </View>
           </View>
           <View style={{margin: 5}}>
-            <Text style={{fontSize: 18, fontWeight: 'bold'}}>
-              PALAWIJA H1 KUALITAS MANTAP
-            </Text>
+            <Text style={{fontSize: 18, fontWeight: 'bold'}}>{data.name}</Text>
           </View>
           <View style={{margin: 5}}>
             <Text>Informasi Produk</Text>
           </View>
           <View>
             <Card style={{weight: 100, height: 100}}>
-              <Text>DiJual Palawija kualitas Super duper segar</Text>
+              <Text>{data.description}</Text>
             </Card>
           </View>
+          <Text>Jumlah</Text>
+          <TextInput
+            onChangeText={value => {
+              setData('amount', value);
+            }}
+          />
         </ScrollView>
-        <Button full success>
+        <Button full success onPress={this.handleRequest}>
           <Text style={{color: 'white', fontWeight: 'bold'}}>
             Tambah Ke Keranjang
           </Text>
@@ -102,6 +118,10 @@ export default class DetailProduct extends Component {
     );
   }
 }
+
+const mapStateToProps = createStructuredSelector({
+  data: selectors.getData(),
+});
 
 /**
  *  _id: new mongoose.Types.ObjectId(),
@@ -114,3 +134,8 @@ export default class DetailProduct extends Component {
     description: req.body.description,
     productImage: req.file.path
  */
+
+export default connect(
+  mapStateToProps,
+  actions,
+)(DetailProduct);

@@ -17,12 +17,22 @@ import {
   Tabs,
   TabHeading,
 } from 'native-base';
-
+import {connect} from 'react-redux';
 const {height, width} = Dimensions.get('window');
 import Tab1 from '../../components/Profile';
+import * as actions from './actions';
+import * as selectors from './selectors';
+import {createStructuredSelector} from 'reselect';
 
-export default class Profile extends Component {
+class Profile extends Component {
+  handleUpdate = id => {
+    const {updateProfile} = this.props;
+    updateProfile(id);
+  };
+
   render() {
+    const {data, setDataUser, setData} = this.props;
+    console.log('DATA PROFILE ', data);
     return (
       <Container>
         <CardItem cardBody shadow>
@@ -60,7 +70,6 @@ export default class Profile extends Component {
             <Icon type="FontAwesome" name="ticket" />
           </Button>
         </CardItem>
-
         <Tabs>
           <Tab
             heading={
@@ -70,7 +79,41 @@ export default class Profile extends Component {
               </TabHeading>
             }>
             <ScrollView>
-              <Tab1 />
+              <Tab1
+                name={data.name}
+                numberPhone={data.phone_number}
+                city={data.city}
+                address={data.address}
+                firstbank={data.rekening_name1}
+                numberRek={data.rekening_number1}
+                secondbank={data.rekening_name2}
+                secondRek={data.rekening_number2}
+                inputName={value => {
+                  setDataUser('name', value);
+                }}
+                inputHp={value => {
+                  setDataUser('phone_number', value);
+                }}
+                inputCity={value => {
+                  setDataUser('city', value);
+                }}
+                inputAdress={value => {
+                  setDataUser('address', value);
+                }}
+                inputBank1={value => {
+                  setDataUser('rekening_name1', value);
+                }}
+                inputNumberRek1={value => {
+                  setDataUser('rekening_number1', value);
+                }}
+                inputBank2={value => {
+                  setDataUser('rekening_name2', value);
+                }}
+                inputNumberRek2={value => {
+                  setDataUser('rekening_number2', value);
+                }}
+                event={() => this.handleUpdate(data.user_id)}
+              />
             </ScrollView>
           </Tab>
           <Tab
@@ -85,3 +128,12 @@ export default class Profile extends Component {
     );
   }
 }
+
+const mapStateToProps = createStructuredSelector({
+  data: selectors.getDataProfile(),
+});
+
+export default connect(
+  mapStateToProps,
+  actions,
+)(Profile);
