@@ -1,6 +1,19 @@
-import {SET_DATA, SET_LOADING, SET_ERROR} from './constants';
+import {SET_DATA, SET_LOADING, SET_ERROR, SET_DATA_USER} from './constants';
 
-const initialState = {};
+const initialState = {
+  profile: {},
+  nameData: '',
+  user: {
+    name: '',
+    phone_number: null,
+    address: '',
+    city: '',
+    rekening_name1: '',
+    rekening_number1: null,
+    rekening_name2: '',
+    rekening_number2: null,
+  },
+};
 
 const ProfileReducer = (state = initialState, action) => {
   switch (action.type) {
@@ -10,6 +23,8 @@ const ProfileReducer = (state = initialState, action) => {
       return {...state, isLoading: action.status};
     case SET_ERROR:
       return {...state, errors: action.errors};
+    case SET_DATA_USER:
+      return {...state, user: {...state.user, [action.field]: action.value}};
     default:
       return state;
   }

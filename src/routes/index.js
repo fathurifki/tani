@@ -8,6 +8,7 @@ import Profile from '../pages/Profile';
 import Sell from '../pages/Sell';
 import Register from '../pages/Register';
 import Cart from '../pages/Cart';
+import Payment from '../pages/Payment';
 
 const appNavigator = createStackNavigator(
   {
@@ -55,6 +56,12 @@ const appNavigator = createStackNavigator(
     },
     cart: {
       screen: Cart,
+      navigationOptions: {
+        header: null,
+      },
+    },
+    payment: {
+      screen: Payment,
       navigationOptions: {
         header: null,
       },

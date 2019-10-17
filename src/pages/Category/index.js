@@ -37,7 +37,7 @@ class Home extends Component {
   componentDidMount() {
     const {categoryData, navigation} = this.props;
     categoryData(navigation.state.params.category);
-    console.log('MOUNT', navigation.state.params.category);
+    console.log('MOUNT CATEGORY', navigation.state.params.category);
   }
 
   keyExtractor = () => item => item.id;
@@ -48,7 +48,12 @@ class Home extends Component {
       image={item.image}
       stock={item.stock}
       price={item.price}
-      onPress={() => this.props.navigation.navigate('detailproduct')}
+      onPress={() =>
+        this.props.navigation.navigate({
+          routeName: 'detailproduct',
+          params: {id: item._id},
+        })
+      }
     />
   );
   render() {

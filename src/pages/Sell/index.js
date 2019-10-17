@@ -1,8 +1,15 @@
 import React, {Component} from 'react';
-import {View, StyleSheet, ScrollView, TextInput} from 'react-native';
+import {
+  View,
+  StyleSheet,
+  ScrollView,
+  TextInput,
+  TouchableOpacity,
+} from 'react-native';
 import {Header, Card, Text} from 'react-native-elements';
 import {Container, Form, Textarea, Button} from 'native-base';
 import PickerProduct from '../../components/Picker';
+import ImagePicker from 'react-native-image-picker';
 
 export default class Sell extends Component {
   render() {
@@ -14,6 +21,11 @@ export default class Sell extends Component {
           rightComponent={{icon: 'home', color: '#fff'}}
         />
         <ScrollView>
+          <TouchableOpacity>
+            <View>
+              <Text>Upload</Text>
+            </View>
+          </TouchableOpacity>
           <Text>Tambah Produk</Text>
           <View>
             <Card>
