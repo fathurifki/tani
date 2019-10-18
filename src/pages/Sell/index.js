@@ -5,13 +5,52 @@ import {
   ScrollView,
   TextInput,
   TouchableOpacity,
+  Image,
 } from 'react-native';
 import {Header, Card, Text} from 'react-native-elements';
 import {Container, Form, Textarea, Button} from 'native-base';
 import PickerProduct from '../../components/Picker';
 import ImagePicker from 'react-native-image-picker';
 
-export default class Sell extends Component {
+class Sell extends Component {
+  constructor(props) {
+    super(props);
+
+    this.state = {
+      filePath: {},
+    };
+  }
+
+  chooseFile = () => {
+    const options = {
+      title: 'Select Image',
+      customButtons: [
+        {name: 'customOptionKey', title: 'Choose Photo from Custom Option'},
+      ],
+      storageOptions: {
+        skipBackup: true,
+        path: 'images',
+      },
+    };
+    ImagePicker.showImagePicker(options, response => {
+      console.log('Response = ', response);
+
+      if (response.didCancel) {
+        console.log('User cancelled image picker');
+      } else if (response.error) {
+        console.log('ImagePicker Error: ', response.error);
+      } else if (response.customButton) {
+        console.log('User tapped custom button: ', response.customButton);
+        alert(response.customButton);
+      } else {
+        let source = response;
+        this.setState({
+          filePath: source,
+        });
+      }
+    });
+  };
+
   render() {
     return (
       <Container>
@@ -21,14 +60,23 @@ export default class Sell extends Component {
           rightComponent={{icon: 'home', color: '#fff'}}
         />
         <ScrollView>
-          <TouchableOpacity>
-            <View>
-              <Text>Upload</Text>
-            </View>
-          </TouchableOpacity>
           <Text>Tambah Produk</Text>
           <View>
             <Card>
+              <View style={{alignSelf: 'center'}}>
+                <Text>Upload Produk</Text>
+                <TouchableOpacity onPress={this.chooseFile.bind(this)}>
+                  <Image
+                    style={{
+                      borderRadius: 10,
+                      width: 80,
+                      height: 80,
+                      margin: 5,
+                    }}
+                    source={this.state.filePath}
+                  />
+                </TouchableOpacity>
+              </View>
               <Text>Nama Penjual</Text>
               <TextInput
                 underlineColorAndroid="rgb(255,0,0)"
@@ -107,3 +155,4 @@ const styles = StyleSheet.create({
     description: req.body.description,
     productImage: req.file.path
  */
+export default Sell;
