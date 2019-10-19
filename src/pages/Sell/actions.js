@@ -1,4 +1,5 @@
 import {SET_DATA, SET_LOADING, SET_ERROR} from './constants';
+import {sellProductApi} from '../../services/api/sell';
 
 export function setData(field, value) {
   return {
@@ -21,3 +22,44 @@ export function setLoading(status) {
     status,
   };
 }
+
+export const sellProduct = data => (dispatch, getState) => {
+  const state = getState().login;
+  const {token} = state;
+  console.log('DATAssssss', data);
+
+  const {
+    uri,
+    type,
+    filename,
+    name,
+    price,
+    stock,
+    category,
+    weight,
+    description,
+  } = data;
+
+  const formData = new FormData();
+  formData.append('name', name);
+  formData.append('price', price);
+  formData.append('stock', stock);
+  formData.append('category', category);
+  formData.append('weight', weight);
+  formData.append('description', description);
+  formData.append('product_image', {uri: uri, type: type, name: filename});
+
+  sellProductApi
+    .sellProduct(formData, token.token)
+    .then(response => {
+      if (response) {
+        console.log('SUKSES CREATE');
+      }
+    })
+    .catch(error => {
+      if (error) {
+        console.log(error);
+        console.log('FAILED CREATE');
+      }
+    });
+};

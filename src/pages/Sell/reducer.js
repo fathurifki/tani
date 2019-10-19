@@ -1,6 +1,14 @@
 import {SET_DATA, SET_LOADING, SET_ERROR} from './constants';
 
-const initialState = {};
+const initialState = {
+  name: '',
+  price: null,
+  stock: null,
+  category: '',
+  weight: '',
+  description: '',
+  product_image: null,
+};
 
 const SellReducer = (state = initialState, action) => {
   switch (action.type) {

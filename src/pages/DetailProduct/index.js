@@ -15,8 +15,8 @@ class DetailProduct extends Component {
   }
 
   handleRequest = () => {
-    const {requestBuy, navigation} = this.props;
-    requestBuy(navigation.state.params.id);
+    const {addProduct, navigation} = this.props;
+    addProduct(navigation.state.params.id);
   };
 
   render() {
