@@ -2,9 +2,12 @@ import React, {Component} from 'react';
 import {View, Text, StyleSheet, Dimensions} from 'react-native';
 import {Item, Form, Input, Label} from 'native-base';
 import {Button} from 'react-native-elements';
-
+import {connect} from 'react-redux';
+import * as actions from './actions';
+import * as selectors from './selectors';
 class Register extends Component {
   render() {
+    const {register, setData} = this.props;
     return (
       <View style={styles.container}>
         <View>
@@ -29,10 +32,6 @@ class Register extends Component {
           <Form>
             <View style={styles.input}>
               <Item floatingLabel>
-                <Label>Nama Lengkap</Label>
-                <Input />
-              </Item>
-              <Item floatingLabel>
                 <Label>Email</Label>
                 <Input onChangeText={text => setData('email', text)} />
               </Item>
@@ -47,7 +46,7 @@ class Register extends Component {
           </Form>
         </View>
         <View style={{width: '90%', alignSelf: 'center', padding: 10}}>
-          <Button title="Sign Up" onPress={() => request()} />
+          <Button title="Sign Up" onPress={() => register()} />
         </View>
       </View>
     );
@@ -67,4 +66,7 @@ const styles = StyleSheet.create({
   },
 });
 
-export default Register;
+export default connect(
+  null,
+  actions,
+)(Register);

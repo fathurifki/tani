@@ -5,15 +5,54 @@ import {
   Image,
   ScrollView,
   TouchableOpacity,
+  FlatList,
 } from 'react-native';
 import {Header, Card, Text} from 'react-native-elements';
-import {Container, Button, Icon} from 'native-base';
+import {Container, Button, Content} from 'native-base';
+import {createStructuredSelector} from 'reselect';
 import {Assets} from '../../asset';
+import {connect} from 'react-redux';
+import * as actions from './actions';
+import * as selectors from './selectors';
 
+import CardContent from '../../components/CartContent';
 const DEVICE_WIDTH = Dimensions.get('window').width;
 
-export default class Cart extends Component {
+class Cart extends Component {
+  constructor(props) {
+    super(props);
+    this.state = {
+      clicks: 0,
+    };
+    this.incrementItem = this.incrementItem.bind(this);
+    this.decrementItem = this.decrementItem.bind(this);
+  }
+
+  updateValue = value => {
+    this.setState({clicks: value});
+  };
+
+  incrementItem = () => {
+    this.setState({clicks: this.state.clicks + 1});
+  };
+
+  decrementItem = () => {
+    this.setState({clicks: this.state.clicks - 1});
+  };
+
+  componentDidMount() {
+    const {fetchCart} = this.props;
+    fetchCart();
+  }
+
+  renderItem = ({item}) => (
+    <CardContent title={item.title} price={item.price} amount={item.amount} />
+  );
+
   render() {
+    const {data} = this.props;
+    console.log('DATA CART', data);
+    console.log('STATE', this.state);
     return (
       <Container>
         <Header
@@ -21,52 +60,18 @@ export default class Cart extends Component {
           centerComponent={{text: 'Keranjang', style: {color: '#fff'}}}
           rightComponent={{icon: 'home', color: '#fff'}}
         />
-        <ScrollView>
-          <View>
-            <Card>
-              <View style={{flex: 1, flexDirection: 'row'}}>
-                <Image
-                  style={{
-                    borderRadius: 10,
-                    width: 80,
-                    height: 80,
-                    margin: 5,
-                  }}
-                  source={Assets.palawija}
-                />
-                <View style={{flexDirection: 'column'}}>
-                  <View style={{width: DEVICE_WIDTH * 0.3}}>
-                    <Text>PALAWIJA H1 SUPER MANTAP</Text>
-                  </View>
-                  <View>
-                    <Text>Rp. 20000</Text>
-                  </View>
-                </View>
-                <View
-                  style={{
-                    flex: 1,
-                    flexDirection: 'row',
-                    justifyContent: 'space-between',
-                    alignItems: 'center',
-                  }}>
-                  <View>
-                    <TouchableOpacity>
-                      <Icon name="ios-remove" />
-                    </TouchableOpacity>
-                  </View>
-                  <View>
-                    <Text style={{margin: 5}}> 20 </Text>
-                  </View>
-                  <View>
-                    <TouchableOpacity>
-                      <Icon name="ios-add" />
-                    </TouchableOpacity>
-                  </View>
-                </View>
-              </View>
-            </Card>
-          </View>
-        </ScrollView>
+        <View>
+          <ScrollView>
+            <FlatList
+              vertical
+              style={{height: Dimensions.get('window').width * 1}}
+              data={data}
+              keyExtractor={(item, index) => item._id.toString()}
+              renderItem={item => this.renderItem(item)}
+            />
+          </ScrollView>
+        </View>
+        <Content />
         <Button full success>
           <Text style={{color: 'white', fontWeight: 'bold'}}> Checkout </Text>
         </Button>
@@ -74,3 +79,12 @@ export default class Cart extends Component {
     );
   }
 }
+
+const mapStateToProps = createStructuredSelector({
+  data: selectors.getData(),
+});
+
+export default connect(
+  mapStateToProps,
+  actions,
+)(Cart);

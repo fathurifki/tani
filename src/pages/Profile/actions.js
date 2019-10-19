@@ -39,6 +39,7 @@ export const fetchProfile = () => (dispatch, getState) => {
     .getProfile(token.token)
     .then(response => {
       if (response) {
+        console.log('RESPONSE PROFILE', response.data);
         dispatch(setData('profile', response.data));
         console.log('SUKSES GET PROFILE');
       }

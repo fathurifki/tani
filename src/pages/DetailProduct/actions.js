@@ -2,6 +2,7 @@ import {SET_DATA, SET_LOADING, SET_ERROR} from './constants';
 import {detailProductApi} from '../../services/api/detailProduct';
 import {buyProductApi} from '../../services/api/buyProduct';
 import NavigationService from '../../NavigationService';
+import {cartApi} from '../../services/api/cart';
 
 export function setData(field, value) {
   return {
@@ -54,8 +55,6 @@ export const requestBuy = id => (dispatch, getState) => {
     detailProduct: {amount},
   } = getState();
 
-  console.log('STATE', token);
-
   const payload = {product_id: id, amount: amount};
   console.log('PAYLOAD', payload);
   buyProductApi
@@ -72,6 +71,32 @@ export const requestBuy = id => (dispatch, getState) => {
       if (error) {
         console.log(error);
         console.log('FAILED BUY PRODUCT');
+      }
+    });
+};
+
+export const addProduct = id => (dispatch, getState) => {
+  const {
+    login: {token},
+    detailProduct: {amount},
+  } = getState();
+
+  console.log('STATE', token);
+
+  const payload = {product_id: id, amount: amount};
+  cartApi
+    .postCart(payload, token.token)
+    .then(response => {
+      if (response) {
+        console.log('DATA', response.data);
+        console.log('SUKSESS ADD TO CART');
+        NavigationService.navigate('home');
+      }
+    })
+    .catch(error => {
+      if (error) {
+        console.log(error);
+        console.log('FAILED ADD TO CART');
       }
     });
 };
