@@ -1,5 +1,12 @@
-import {SET_DATA, SET_LOADING, SET_ERROR, SET_DATA_USER} from './constants';
+import {
+  SET_DATA,
+  SET_LOADING,
+  SET_ERROR,
+  SET_DATA_USER,
+  CLEAR_DATA,
+} from './constants';
 import {profileApi} from '../../services/api/profile';
+import {logoutService} from '../../utils/logoutService';
 
 export function setData(field, value) {
   return {
@@ -28,6 +35,13 @@ export function setLoading(status) {
   return {
     type: SET_LOADING,
     status,
+  };
+}
+
+export function clearData() {
+  return async (dispatch, getState) => {
+    logoutService();
+    dispatch({type: CLEAR_DATA});
   };
 }
 
@@ -74,6 +88,28 @@ export const updateProfile = id => (dispatch, getState) => {
       if (error) {
         console.log('ERROR', error);
         console.log('FAILED UPDATE DATA PROFILE');
+      }
+    });
+};
+
+export const createProfile = () => (dispatch, getState) => {
+  const {
+    login: {token},
+    profile: {user},
+  } = getState();
+
+  profileApi
+    .createProfile(user, token.token)
+    .then(response => {
+      if (response) {
+        console.log('DATA CREATE', response.data);
+        console.log('SUKSES CREATE PROFILE');
+      }
+    })
+    .catch(error => {
+      if (error) {
+        console.log('ERROR', error);
+        console.log('FAILED CREATE PROFILE');
       }
     });
 };

@@ -1,5 +1,6 @@
 import {SET_DATA, SET_ERROR, SET_LOADING} from './constants';
 import {homeApi} from '../../services/api/home';
+import {logoutService} from '../../utils/logoutService';
 
 export function setData(field, value) {
   return {

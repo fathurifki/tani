@@ -1,4 +1,10 @@
-import {SET_DATA, SET_LOADING, SET_ERROR, SET_DATA_USER} from './constants';
+import {
+  SET_DATA,
+  SET_LOADING,
+  SET_ERROR,
+  SET_DATA_USER,
+  CLEAR_DATA,
+} from './constants';
 
 const initialState = {
   profile: {},
@@ -25,6 +31,8 @@ const ProfileReducer = (state = initialState, action) => {
       return {...state, errors: action.errors};
     case SET_DATA_USER:
       return {...state, user: {...state.user, [action.field]: action.value}};
+    case CLEAR_DATA:
+      return {...initialState};
     default:
       return state;
   }
