@@ -23,16 +23,24 @@ import Tab1 from '../../components/Profile';
 import * as actions from './actions';
 import * as selectors from './selectors';
 import {createStructuredSelector} from 'reselect';
-
 class Profile extends Component {
+  componentDidMount() {
+    const {fetchProfile} = this.props;
+    fetchProfile();
+  }
+
   handleUpdate = id => {
     const {updateProfile} = this.props;
     updateProfile(id);
   };
 
+  handleCreate = () => {
+    const {createProfile} = this.props;
+    createProfile();
+  };
+
   render() {
-    const {data, setDataUser, setData} = this.props;
-    console.log('DATA PROFILE ', data);
+    const {data, setDataUser} = this.props;
     return (
       <Container>
         <CardItem cardBody shadow>
@@ -80,14 +88,24 @@ class Profile extends Component {
             }>
             <ScrollView>
               <Tab1
-                name={data.name}
-                numberPhone={data.phone_number}
-                city={data.city}
-                address={data.address}
-                firstbank={data.rekening_name1}
-                numberRek={data.rekening_number1}
-                secondbank={data.rekening_name2}
-                secondRek={data.rekening_number2}
+                name={data && data.name ? data.name : null}
+                numberPhone={
+                  data && data.phone_number ? data.phone_number : null
+                }
+                city={data && data.city ? data.city : null}
+                address={data && data.address ? data.address : null}
+                firstbank={
+                  data && data.rekening_name1 ? data.rekening_name1 : null
+                }
+                numberRek={
+                  data && data.rekening_number1 ? data.rekening_number1 : null
+                }
+                secondbank={
+                  data && data.rekening_name2 ? data.rekening_name2 : null
+                }
+                secondRek={
+                  data && data.rekening_number2 ? data.rekening_number2 : null
+                }
                 inputName={value => {
                   setDataUser('name', value);
                 }}
@@ -112,7 +130,8 @@ class Profile extends Component {
                 inputNumberRek2={value => {
                   setDataUser('rekening_number2', value);
                 }}
-                event={() => this.handleUpdate(data.user_id)}
+                eventCreate={() => this.handleCreate()}
+                eventUpdate={() => this.handleUpdate(data.user_id)}
               />
             </ScrollView>
           </Tab>

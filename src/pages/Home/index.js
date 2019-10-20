@@ -1,13 +1,30 @@
 import React, {Component} from 'react';
 import {View, FlatList, StyleSheet, Dimensions, ScrollView} from 'react-native';
-import {Header, Card, Text} from 'react-native-elements';
-import {Container, Content, Footer, FooterTab, Button} from 'native-base';
+import {Card, Text} from 'react-native-elements';
+import {
+  Container,
+  Header,
+  Left,
+  Body,
+  Content,
+  Footer,
+  FooterTab,
+  Button,
+  Icon,
+  Title,
+  Right,
+  CardItem,
+} from 'native-base';
 import CardComponent from '../../components/Card';
 import {connect} from 'react-redux';
 import {createStructuredSelector} from 'reselect';
-import * as actions from './actions';
+import {home} from './actions';
 import * as selectors from './seletcors';
+import {clearData} from '../Profile/actions';
 import {Assets} from '../../asset';
+import NavigationService from '../../NavigationService';
+import Notif from '../../components/Notif';
+import * as profile from '../Profile/selectors';
 
 const dummy = [
   {
@@ -34,8 +51,8 @@ const dummy = [
 
 class Home extends Component {
   componentDidMount() {
-    const {home} = this.props;
-    home();
+    const {home: homeActions} = this.props;
+    homeActions();
   }
 
   renderItem = ({item}) => (
@@ -51,27 +68,38 @@ class Home extends Component {
       }
     />
   );
+
+  handleExit = () => {
+    const {clearData: logout} = this.props;
+    logout();
+    NavigationService.reset('login');
+  };
+
   render() {
-    const {data} = this.props;
-    console.log('DATA HOME', data);
+    const {data, profile} = this.props;
+    console.log('DATA HOME', data, profile);
     return (
       <Container style={styles.container}>
-        <Header
-          centerComponent={{text: 'Home', style: {color: '#fff'}}}
-          rightComponent={{icon: 'home', color: '#fff'}}
-        />
+        <Header>
+          <Left>
+            <Button transparent>
+              <Icon name="arrow-back" />
+            </Button>
+          </Left>
+          <Body>
+            <Title>Home</Title>
+          </Body>
+          <Right>
+            <Button hasText transparent onPress={this.handleExit}>
+              <Text style={{color: 'white'}}>Logout</Text>
+            </Button>
+          </Right>
+        </Header>
         <ScrollView>
           <View>
-            <Card>
-              <View style={{flexDirection: 'row'}}>
-                <Text>Total Belanja : </Text>
-                <Text>10 </Text>
-              </View>
-              <View style={{flexDirection: 'row'}}>
-                <Text>Jumlah Belanja : </Text>
-                <Text>Rp. 100000 </Text>
-              </View>
-            </Card>
+            {profile == null ? (
+              <Notif text="[INFO] Lengkapi Profil Untuk Melengkapi Pembayaran" />
+            ) : null}
             <View>
               <FlatList
                 vertical
@@ -121,9 +149,10 @@ const styles = StyleSheet.create({
 
 const mapStateToProps = createStructuredSelector({
   data: selectors.getData(),
+  profile: profile.getDataProfile(),
 });
 
 export default connect(
   mapStateToProps,
-  actions,
+  {home, clearData},
 )(Home);

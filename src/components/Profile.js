@@ -21,7 +21,8 @@ export default class ComponentProfile extends Component {
       inputCity,
       inputNumberRek1,
       inputNumberRek2,
-      event,
+      eventUpdate,
+      eventCreate,
     } = this.props;
     return (
       <View>
@@ -102,7 +103,11 @@ export default class ComponentProfile extends Component {
             defaultValue={secondRek}
           />
         </Card>
-        <Button title="Update" onPress={event} />
+        {{name} == null ? (
+          <Button title="Update" onPress={eventUpdate} />
+        ) : (
+          <Button title="Create" onPress={eventCreate} />
+        )}
       </View>
     );
   }
