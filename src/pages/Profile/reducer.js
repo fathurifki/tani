@@ -19,6 +19,7 @@ const initialState = {
     rekening_name2: '',
     rekening_number2: null,
   },
+  status: [],
 };
 
 const ProfileReducer = (state = initialState, action) => {

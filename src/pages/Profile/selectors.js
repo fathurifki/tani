@@ -9,3 +9,9 @@ export const getDataProfile = () =>
     selectProfileReducer(),
     state => state.profile,
   );
+
+export const getDataPayment = () =>
+  createSelector(
+    selectProfileReducer(),
+    state => state.status,
+  );

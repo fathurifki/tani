@@ -1,5 +1,11 @@
 import React, {Component} from 'react';
-import {StyleSheet, View, Text, TextInput} from 'react-native';
+import {
+  StyleSheet,
+  View,
+  Text,
+  TextInput,
+  TouchableOpacity,
+} from 'react-native';
 import {Card, Button} from 'react-native-elements';
 
 export default class ComponentProfile extends Component {
@@ -23,9 +29,15 @@ export default class ComponentProfile extends Component {
       inputNumberRek2,
       eventUpdate,
       eventCreate,
+      onPress,
     } = this.props;
     return (
       <View>
+        <TouchableOpacity onPress={onPress}>
+          <Card>
+            <Text> > Riwayat Pembayaran</Text>
+          </Card>
+        </TouchableOpacity>
         <Card style={styles.boxWithShadow}>
           <View>
             <Text>Nama </Text>

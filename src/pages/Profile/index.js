@@ -6,6 +6,7 @@ import {
   ScrollView,
   ImageBackground,
   TouchableOpacity,
+  FlatList,
 } from 'react-native';
 import {Text} from 'react-native-elements';
 import {
@@ -20,13 +21,15 @@ import {
 import {connect} from 'react-redux';
 const {height, width} = Dimensions.get('window');
 import Tab1 from '../../components/Profile';
-import * as actions from './actions';
+import {fetchProfile, getPaymentStatus} from './actions';
 import * as selectors from './selectors';
 import {createStructuredSelector} from 'reselect';
+import HistoryCard from '../../components/HistoryCard';
+
 class Profile extends Component {
   componentDidMount() {
-    const {fetchProfile} = this.props;
-    fetchProfile();
+    const {fetchProfile: fetch} = this.props;
+    fetch();
   }
 
   handleUpdate = id => {
@@ -39,14 +42,21 @@ class Profile extends Component {
     createProfile();
   };
 
+  keyExtractor = () => item => item._id;
+
+  renderItem = ({item}) => {
+    <HistoryCard id={item.product} />;
+  };
+
   render() {
     const {data, setDataUser} = this.props;
     return (
       <Container>
         <CardItem cardBody shadow>
-          <ImageBackground style={{height: height * 0.32, width}}>
+          <ImageBackground
+            style={{height: height * 0.32, width, backgroundColor: 'green'}}>
             <TouchableOpacity
-              onPressIn={() => this.props.navigation.navigate('dashboard')}>
+              onPressIn={() => this.props.navigation.navigate('home')}>
               <Icon
                 type="AntDesign"
                 name="left"
@@ -59,6 +69,7 @@ class Profile extends Component {
                 justifyContent: 'flex-end',
                 alignItems: 'center',
                 margin: 20,
+                backgroundColor: 'green',
               }}>
               <Image
                 source={{
@@ -67,8 +78,8 @@ class Profile extends Component {
                 }}
                 style={{width: 120, height: 120, borderRadius: 150 / 2}}
               />
-              <Text style={{margin: 10, color: 'white', fontSize: 20}}>
-                TEST
+              <Text style={{margin: 8, color: 'white', fontSize: 20}}>
+                Halo, {data && data.name ? data.name : null}
               </Text>
             </View>
           </ImageBackground>
@@ -132,16 +143,10 @@ class Profile extends Component {
                 }}
                 eventCreate={() => this.handleCreate()}
                 eventUpdate={() => this.handleUpdate(data.user_id)}
+                onPress={() => this.props.navigation.navigate('paymentstatus')}
               />
             </ScrollView>
           </Tab>
-          <Tab
-            heading={
-              <TabHeading>
-                <Icon type="MaterialCommunityIcons" />
-                <Text style={{color: 'white'}}>Riwayat Transaksi</Text>
-              </TabHeading>
-            }></Tab>
         </Tabs>
       </Container>
     );
@@ -150,9 +155,10 @@ class Profile extends Component {
 
 const mapStateToProps = createStructuredSelector({
   data: selectors.getDataProfile(),
+  status: selectors.getDataPayment(),
 });
 
 export default connect(
   mapStateToProps,
-  actions,
+  {fetchProfile, getPaymentStatus},
 )(Profile);

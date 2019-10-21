@@ -8,8 +8,18 @@ import {
   Image,
   Picker,
 } from 'react-native';
-import {Header, Card, Text} from 'react-native-elements';
-import {Container, Form, Textarea, Button} from 'native-base';
+import {Card, Text} from 'react-native-elements';
+import {
+  Header,
+  Container,
+  Form,
+  Textarea,
+  Button,
+  Left,
+  Icon,
+  Body,
+  Title,
+} from 'native-base';
 import ImagePicker from 'react-native-image-picker';
 import {connect} from 'react-redux';
 import * as actions from './actions';
@@ -75,16 +85,19 @@ class Sell extends Component {
   };
 
   render() {
-    console.log('STATE', this.state);
     return (
       <Container>
-        <Header
-          leftComponent={{icon: 'menu', color: '#fff'}}
-          centerComponent={{text: 'Jual', style: {color: '#fff'}}}
-          rightComponent={{icon: 'home', color: '#fff'}}
-        />
+        <Header>
+          <Left>
+            <Button transparent onPress={() => this.props.navigation.goBack()}>
+              <Icon name="arrow-back" />
+            </Button>
+          </Left>
+          <Body>
+            <Title>Jual</Title>
+          </Body>
+        </Header>
         <ScrollView>
-          <Text>Tambah Produk</Text>
           <View>
             <Card>
               <View style={{alignSelf: 'center'}}>
