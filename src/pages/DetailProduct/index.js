@@ -1,8 +1,13 @@
 import React, {Component} from 'react';
-import {View, ScrollView, TextInput} from 'react-native';
-import {Header, Card, Text, Image} from 'react-native-elements';
-import {Container, Button} from 'native-base';
-import {Assets} from '../../asset';
+import {
+  View,
+  ScrollView,
+  TextInput,
+  Image,
+  ImageBackground,
+} from 'react-native';
+import {Card, Text} from 'react-native-elements';
+import {Container, Button, Header, Left, Icon, Body, Title} from 'native-base';
 import {connect} from 'react-redux';
 import * as actions from './actions';
 import * as selectors from './selectors';
@@ -21,30 +26,30 @@ class DetailProduct extends Component {
 
   render() {
     const {data, setData} = this.props;
-    console.log('DATA', data);
     return (
       <Container>
-        <Header
-          leftComponent={{icon: 'menu', color: '#fff'}}
-          centerComponent={{style: {color: '#fff'}}}
-          rightComponent={{icon: 'home', color: '#fff'}}
-        />
+        <Header>
+          <Left>
+            <Button transparent onPress={() => this.props.navigation.goBack()}>
+              <Icon name="arrow-back" />
+            </Button>
+          </Left>
+          <Body>
+            <Title>Detail Produk</Title>
+          </Body>
+        </Header>
         <ScrollView>
-          <View>
-            <Text style={{alignSelf: 'center', margin: 10, fontSize: 15}}>
-              Detail Produk
-            </Text>
-          </View>
           <View style={{flexDirection: 'row'}}>
             <View>
-              <Image
+              <ImageBackground
                 style={{
                   borderRadius: 10,
                   width: 150,
                   height: 150,
                   margin: 5,
                 }}
-                source={Assets.palawija}></Image>
+                source={{uri: `https://${data.productImage}`}}
+              />
             </View>
             <View>
               <Text style={{margin: 5}}>Harga :</Text>

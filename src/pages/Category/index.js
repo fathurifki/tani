@@ -1,8 +1,18 @@
 import React, {Component} from 'react';
 import {View, FlatList, StyleSheet, ScrollView} from 'react-native';
-import {Header, Text} from 'react-native-elements';
-import {Container, Content, Footer, FooterTab, Button} from 'native-base';
-import {Assets} from '../../asset';
+import {Text} from 'react-native-elements';
+import {
+  Container,
+  Content,
+  Footer,
+  FooterTab,
+  Button,
+  Left,
+  Icon,
+  Body,
+  Title,
+  Header,
+} from 'native-base';
 import {connect} from 'react-redux';
 import {createStructuredSelector} from 'reselect';
 
@@ -10,34 +20,10 @@ import * as actions from './actions';
 import * as selectors from './selectors';
 import CardComponent from '../../components/Category';
 
-const dummy = [
-  {
-    id: 1,
-    product: 'Palawija',
-    image: Assets.palawija,
-  },
-  {
-    id: 2,
-    product: 'Palawija Mantap',
-    image: Assets.palawija,
-  },
-  {
-    id: 3,
-    product: 'Palawija Segar',
-    image: Assets.palawija,
-  },
-  {
-    id: 4,
-    product: 'Palawija Super',
-    image: Assets.palawija,
-  },
-];
-
 class Home extends Component {
   componentDidMount() {
     const {categoryData, navigation} = this.props;
     categoryData(navigation.state.params.category);
-    console.log('MOUNT CATEGORY', navigation.state.params.category);
   }
 
   keyExtractor = () => item => item.id;
@@ -60,10 +46,16 @@ class Home extends Component {
     const {data} = this.props;
     return (
       <Container style={styles.container}>
-        <Header
-          centerComponent={{text: 'Kategori', style: {color: '#fff'}}}
-          rightComponent={{icon: 'home', color: '#fff'}}
-        />
+        <Header>
+          <Left>
+            <Button transparent onPress={() => this.props.navigation.goBack()}>
+              <Icon name="arrow-back" />
+            </Button>
+          </Left>
+          <Body>
+            <Title>Kategori</Title>
+          </Body>
+        </Header>
         <ScrollView>
           <View>
             <FlatList

@@ -24,35 +24,14 @@ import {clearData} from '../Profile/actions';
 import {Assets} from '../../asset';
 import NavigationService from '../../NavigationService';
 import Notif from '../../components/Notif';
+import {fetchProfile} from '../Profile/actions';
 import * as profile from '../Profile/selectors';
-
-const dummy = [
-  {
-    id: 1,
-    product: 'palawija',
-    image: Assets.palawija,
-  },
-  {
-    id: 2,
-    product: 'beras',
-    image: Assets.beras,
-  },
-  {
-    id: 3,
-    product: 'buah',
-    image: Assets.buah,
-  },
-  {
-    id: 4,
-    product: 'perkebunan',
-    image: Assets.kopi,
-  },
-];
 
 class Home extends Component {
   componentDidMount() {
-    const {home: homeActions} = this.props;
+    const {home: homeActions, fetchProfile: profile} = this.props;
     homeActions();
+    profile();
   }
 
   renderItem = ({item}) => (
@@ -81,13 +60,8 @@ class Home extends Component {
     return (
       <Container style={styles.container}>
         <Header>
-          <Left>
-            <Button transparent>
-              <Icon name="arrow-back" />
-            </Button>
-          </Left>
           <Body>
-            <Title>Home</Title>
+            <Title>Beranda</Title>
           </Body>
           <Right>
             <Button hasText transparent onPress={this.handleExit}>
@@ -96,6 +70,10 @@ class Home extends Component {
           </Right>
         </Header>
         <ScrollView>
+          <Text style={{fontSize: 20}}>Selamat Datang</Text>
+          <Text style={{fontSize: 15}}>
+            Silahkan berbelanja berdasarkan kebutuhan anda
+          </Text>
           <View>
             {profile == null ? (
               <Notif text="[INFO] Lengkapi Profil Untuk Melengkapi Pembayaran" />
@@ -154,5 +132,5 @@ const mapStateToProps = createStructuredSelector({
 
 export default connect(
   mapStateToProps,
-  {home, clearData},
+  {home, clearData, fetchProfile},
 )(Home);

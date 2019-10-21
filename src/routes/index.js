@@ -9,6 +9,7 @@ import Sell from '../pages/Sell';
 import Register from '../pages/Register';
 import Cart from '../pages/Cart';
 import Payment from '../pages/Payment';
+import PaymentStatus from '../pages/PaymentStatus';
 
 const appNavigator = createStackNavigator(
   {
@@ -66,9 +67,15 @@ const appNavigator = createStackNavigator(
         header: null,
       },
     },
+    paymentstatus: {
+      screen: PaymentStatus,
+      navigationOptions: {
+        header: null,
+      },
+    },
   },
   {
-    initialRouteName: 'login',
+    initialRouteName: 'category',
   },
 );
 

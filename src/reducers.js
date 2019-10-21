@@ -7,6 +7,7 @@ import ProfileReducer from './pages/Profile/reducer';
 import SellReducer from './pages/Sell/reducer';
 import CartReducer from './pages/Cart/reducer';
 import RegisterReducer from './pages/Register/reducer';
+import PaymentStatusReducer from './pages/PaymentStatus/reducer';
 
 const reducers = combineReducers({
   login: LoginReducer,
@@ -17,6 +18,7 @@ const reducers = combineReducers({
   sell: SellReducer,
   cart: CartReducer,
   register: RegisterReducer,
+  paymentStatus: PaymentStatusReducer,
 });
 
 export default reducers;

@@ -7,6 +7,7 @@ import {
 } from './constants';
 import {profileApi} from '../../services/api/profile';
 import {logoutService} from '../../utils/logoutService';
+import {paymentStatusApi} from '../../services/api/paymentstatus';
 
 export function setData(field, value) {
   return {
@@ -110,6 +111,30 @@ export const createProfile = () => (dispatch, getState) => {
       if (error) {
         console.log('ERROR', error);
         console.log('FAILED CREATE PROFILE');
+      }
+    });
+};
+
+export const getPaymentStatus = () => (dispatch, getState) => {
+  const {
+    login: {token},
+    profile: {status},
+  } = getState();
+
+  console.log('STATUS', status);
+
+  paymentStatusApi
+    .getPayment(token.token)
+    .then(response => {
+      if (response) {
+        console.log('RESPONSE PAYMENT', response.data.data);
+        dispatch(setData('status', response.data.data));
+        console.log('SUCCESS GET PAYMENT');
+      }
+    })
+    .catch(error => {
+      if (error) {
+        console.log('ERROR', error);
       }
     });
 };

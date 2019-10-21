@@ -1,22 +1,22 @@
 import React, {Component} from 'react';
+import {View, Dimensions, ScrollView, FlatList} from 'react-native';
+import {Text} from 'react-native-elements';
 import {
-  View,
-  Dimensions,
-  Image,
-  ScrollView,
-  TouchableOpacity,
-  FlatList,
-} from 'react-native';
-import {Header, Card, Text} from 'react-native-elements';
-import {Container, Button, Content} from 'native-base';
+  Header,
+  Container,
+  Button,
+  Content,
+  Left,
+  Icon,
+  Body,
+  Title,
+} from 'native-base';
 import {createStructuredSelector} from 'reselect';
-import {Assets} from '../../asset';
 import {connect} from 'react-redux';
-import * as actions from './actions';
+import {fetchCart} from './actions';
 import * as selectors from './selectors';
-
+import {fetchDetail} from '../DetailProduct/actions';
 import CardContent from '../../components/CartContent';
-const DEVICE_WIDTH = Dimensions.get('window').width;
 
 class Cart extends Component {
   constructor(props) {
@@ -41,12 +41,13 @@ class Cart extends Component {
   };
 
   componentDidMount() {
-    const {fetchCart} = this.props;
+    const {fetchCart, fetchDetail: fetchDetail} = this.props;
     fetchCart();
+    fetchDetail();
   }
 
   renderItem = ({item}) => (
-    <CardContent title={item.title} price={item.price} amount={item.amount} />
+    <CardContent id={item.id} title={item.title} amount={item.amount} />
   );
 
   render() {
@@ -55,16 +56,20 @@ class Cart extends Component {
     console.log('STATE', this.state);
     return (
       <Container>
-        <Header
-          leftComponent={{icon: 'menu', color: '#fff'}}
-          centerComponent={{text: 'Keranjang', style: {color: '#fff'}}}
-          rightComponent={{icon: 'home', color: '#fff'}}
-        />
+        <Header>
+          <Left>
+            <Button transparent onPress={() => this.props.navigation.goBack()}>
+              <Icon name="arrow-back" />
+            </Button>
+          </Left>
+          <Body>
+            <Title>Keranjang</Title>
+          </Body>
+        </Header>
         <View>
           <ScrollView>
             <FlatList
               vertical
-              style={{height: Dimensions.get('window').width * 1}}
               data={data}
               keyExtractor={(item, index) => item._id.toString()}
               renderItem={item => this.renderItem(item)}
@@ -72,9 +77,6 @@ class Cart extends Component {
           </ScrollView>
         </View>
         <Content />
-        <Button full success>
-          <Text style={{color: 'white', fontWeight: 'bold'}}> Checkout </Text>
-        </Button>
       </Container>
     );
   }
@@ -86,5 +88,5 @@ const mapStateToProps = createStructuredSelector({
 
 export default connect(
   mapStateToProps,
-  actions,
+  {fetchCart, fetchDetail},
 )(Cart);
