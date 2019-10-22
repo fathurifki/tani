@@ -26,7 +26,7 @@ export default class CardContent extends Component {
               <Text>{title}</Text>
             </View>
             <View>
-              <Text>{price}</Text>
+              <Text>Rp: {price}</Text>
             </View>
           </View>
           <View
