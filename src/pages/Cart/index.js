@@ -13,10 +13,10 @@ import {
 } from 'native-base';
 import {createStructuredSelector} from 'reselect';
 import {connect} from 'react-redux';
-import {fetchCart} from './actions';
+import {fetchCart, deleteCart, checkoutCart} from './actions';
 import * as selectors from './selectors';
-import {fetchDetail} from '../DetailProduct/actions';
 import CardContent from '../../components/CartContent';
+import NavigationService from '../../NavigationService';
 
 class Cart extends Component {
   constructor(props) {
@@ -41,19 +41,42 @@ class Cart extends Component {
   };
 
   componentDidMount() {
-    const {fetchCart, fetchDetail: fetchDetail} = this.props;
-    fetchCart();
-    fetchDetail();
+    const {fetchCart: fetchCarts} = this.props;
+    fetchCarts();
   }
 
+  handleDelete = id => {
+    const {deleteCart} = this.props;
+    // const arrPayload = id;
+    // const payload = arrPayload.split();
+    // console.log('PAYLOAD', payload);
+    deleteCart(id);
+  };
+
+  handleBuy = id => {
+    const {checkoutCart} = this.props;
+    // const arrPayload = id;
+    // const payload = arrPayload.split();
+    // console.log('PAYLOAD', payload);
+    // checkoutCart(payload);
+    checkoutCart(id);
+    NavigationService.navigate('payment');
+    // console.log('PAYLOAD', id);
+  };
+
   renderItem = ({item}) => (
-    <CardContent id={item.id} title={item.title} amount={item.amount} />
+    <CardContent
+      id={item._id}
+      product_id={item.product_id}
+      product_name={item.product_name}
+      amount={item.amount}
+      eventDelete={() => this.handleDelete(item._id)}
+      eventBuy={() => this.handleBuy(item._id)}
+    />
   );
 
   render() {
     const {data} = this.props;
-    console.log('DATA CART', data);
-    console.log('STATE', this.state);
     return (
       <Container>
         <Header>
@@ -66,16 +89,16 @@ class Cart extends Component {
             <Title>Keranjang</Title>
           </Body>
         </Header>
-        <View>
-          <ScrollView>
+        <ScrollView>
+          <View>
             <FlatList
               vertical
               data={data}
               keyExtractor={(item, index) => item._id.toString()}
               renderItem={item => this.renderItem(item)}
             />
-          </ScrollView>
-        </View>
+          </View>
+        </ScrollView>
         <Content />
       </Container>
     );
@@ -84,9 +107,10 @@ class Cart extends Component {
 
 const mapStateToProps = createStructuredSelector({
   data: selectors.getData(),
+  url: selectors.getUrl(),
 });
 
 export default connect(
   mapStateToProps,
-  {fetchCart, fetchDetail},
+  {fetchCart, deleteCart, checkoutCart},
 )(Cart);

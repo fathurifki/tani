@@ -39,6 +39,7 @@ export const dataLogin = () => (dispatch, getState) => {
     .then(response => {
       if (response) {
         dispatch(setData('token', response.data));
+        dispatch(setData('tokenDelete', response.data));
         NavigationService.navigate('home');
       }
     })

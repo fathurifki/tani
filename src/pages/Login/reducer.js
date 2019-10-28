@@ -1,10 +1,4 @@
-import {
-  SET_DATA,
-  SET_ERROR,
-  SET_LOADING,
-  SEND_REQUEST,
-  CLEAR_LOGIN,
-} from './constants';
+import {SET_DATA, SET_LOADING, CLEAR_LOGIN} from './constants';
 
 const initialState = {
   email: '',
@@ -13,6 +7,7 @@ const initialState = {
   dataLogin: {},
   loginDetail: {},
   token: {},
+  tokenDelete: {},
 };
 
 const LoginReducer = (state = initialState, action) => {
