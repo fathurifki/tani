@@ -44,7 +44,7 @@ export const fetchDetail = idProduct => (dispatch, getState) => {
     .catch(error => {
       if (error) {
         console.log(error);
-        console.log('FAILED GET DETAL');
+        console.log('FAILED GET DETAIL');
       }
     });
 };

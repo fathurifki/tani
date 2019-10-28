@@ -75,7 +75,7 @@ const appNavigator = createStackNavigator(
     },
   },
   {
-    initialRouteName: 'category',
+    initialRouteName: 'login',
   },
 );
 

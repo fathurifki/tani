@@ -8,25 +8,24 @@ const DEVICE_WIDTH = Dimensions.get('window').width;
 
 export default class CardContent extends Component {
   render() {
-    const {title, price, amount, image} = this.props;
+    const {
+      id,
+      product_id,
+      product_name,
+      amount,
+      eventBuy,
+      eventDelete,
+    } = this.props;
     return (
       <Card>
         <View style={{flex: 1, flexDirection: 'row'}}>
-          <Image
-            style={{
-              borderRadius: 10,
-              width: 80,
-              height: 80,
-              margin: 5,
-            }}
-            source={image}
-          />
           <View style={{flexDirection: 'column'}}>
             <View style={{width: DEVICE_WIDTH * 0.3}}>
-              <Text>{title}</Text>
+              <Text>{id}</Text>
+              <Text>{product_id}</Text>
             </View>
             <View>
-              <Text>Rp: {price}</Text>
+              <Text>{product_name}</Text>
             </View>
           </View>
           <View
@@ -41,13 +40,13 @@ export default class CardContent extends Component {
             </View>
           </View>
         </View>
-        <Button block danger>
+        <Button block danger onPress={eventDelete}>
           <Text
             style={{textAlign: 'center', color: 'white', fontWeight: 'bold'}}>
             Hapus
           </Text>
         </Button>
-        <Button block success style={{marginTop: 5}}>
+        <Button block success style={{marginTop: 5}} onPress={eventBuy}>
           <Text
             style={{textAlign: 'center', color: 'white', fontWeight: 'bold'}}>
             Bayar

@@ -2,6 +2,7 @@ import {SET_DATA, SET_LOADING, SET_ERROR} from './constants';
 
 const initialState = {
   carts: [],
+  url: {},
 };
 
 const CartReducer = (state = initialState, action) => {

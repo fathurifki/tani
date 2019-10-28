@@ -11,6 +11,7 @@ import {Card, Button} from 'react-native-elements';
 export default class ComponentProfile extends Component {
   render() {
     const {
+      userid,
       name,
       numberPhone,
       city,
@@ -115,10 +116,10 @@ export default class ComponentProfile extends Component {
             defaultValue={secondRek}
           />
         </Card>
-        {{name} == null ? (
-          <Button title="Update" onPress={eventUpdate} />
-        ) : (
+        {{userid} == null ? (
           <Button title="Create" onPress={eventCreate} />
+        ) : (
+          <Button title="Update" onPress={eventUpdate} />
         )}
       </View>
     );

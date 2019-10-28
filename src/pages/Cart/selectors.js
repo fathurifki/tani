@@ -9,3 +9,9 @@ export const getData = () =>
     selectCartReducer(),
     state => state.carts,
   );
+
+export const getUrl = () =>
+  createSelector(
+    selectCartReducer(),
+    state => state.url,
+  );

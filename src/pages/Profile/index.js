@@ -21,7 +21,12 @@ import {
 import {connect} from 'react-redux';
 const {height, width} = Dimensions.get('window');
 import Tab1 from '../../components/Profile';
-import {fetchProfile, getPaymentStatus} from './actions';
+import {
+  fetchProfile,
+  getPaymentStatus,
+  setDataUser,
+  updateProfile,
+} from './actions';
 import * as selectors from './selectors';
 import {createStructuredSelector} from 'reselect';
 import HistoryCard from '../../components/HistoryCard';
@@ -99,6 +104,7 @@ class Profile extends Component {
             }>
             <ScrollView>
               <Tab1
+                userid={data.user_id}
                 name={data && data.name ? data.name : null}
                 numberPhone={
                   data && data.phone_number ? data.phone_number : null
@@ -160,5 +166,5 @@ const mapStateToProps = createStructuredSelector({
 
 export default connect(
   mapStateToProps,
-  {fetchProfile, getPaymentStatus},
+  {fetchProfile, getPaymentStatus, setDataUser, updateProfile},
 )(Profile);
