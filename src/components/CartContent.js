@@ -1,5 +1,11 @@
 import React, {Component} from 'react';
-import {View, Dimensions, Image, TouchableOpacity} from 'react-native';
+import {
+  View,
+  Dimensions,
+  Image,
+  TouchableOpacity,
+  CheckBox,
+} from 'react-native';
 import {Card, Text} from 'react-native-elements';
 import {Assets} from '../asset';
 import {Icon, Button} from 'native-base';
@@ -15,6 +21,10 @@ export default class CardContent extends Component {
       amount,
       eventBuy,
       eventDelete,
+      eventAdd,
+      test,
+      cart,
+      checked,
     } = this.props;
     return (
       <Card>
@@ -46,7 +56,7 @@ export default class CardContent extends Component {
             Hapus
           </Text>
         </Button>
-        <Button block success style={{marginTop: 5}} onPress={eventBuy}>
+        <Button block success style={{marginTop: 5}} onPress={eventAdd}>
           <Text
             style={{textAlign: 'center', color: 'white', fontWeight: 'bold'}}>
             Bayar

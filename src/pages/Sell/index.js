@@ -141,6 +141,7 @@ class Sell extends Component {
                 <TextInput
                   style={{marginLeft: 5, flex: 1}}
                   underlineColorAndroid="rgb(255,0,0)"
+                  keyboardType="numeric"
                   onChangeText={typedText => {
                     this.setState({price: typedText});
                   }}
@@ -151,6 +152,7 @@ class Sell extends Component {
                 <TextInput
                   style={{marginLeft: 5, flex: 1}}
                   underlineColorAndroid="rgb(255,0,0)"
+                  keyboardType="numeric"
                   autoCorrect={false}
                   onChangeText={typedText => {
                     this.setState({stock: typedText});
@@ -162,6 +164,7 @@ class Sell extends Component {
                 <TextInput
                   style={{marginLeft: 5, flex: 1}}
                   underlineColorAndroid="rgb(255,0,0)"
+                  keyboardType="numeric"
                   autoCorrect={false}
                   onChangeText={typedText => {
                     this.setState({weight: typedText});

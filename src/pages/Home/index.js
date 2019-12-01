@@ -1,19 +1,24 @@
 import React, {Component} from 'react';
-import {View, FlatList, StyleSheet, Dimensions, ScrollView} from 'react-native';
+import {
+  View,
+  FlatList,
+  StyleSheet,
+  Dimensions,
+  ScrollView,
+  Image,
+  TouchableOpacity,
+} from 'react-native';
 import {Card, Text} from 'react-native-elements';
 import {
   Container,
   Header,
-  Left,
   Body,
   Content,
   Footer,
   FooterTab,
   Button,
-  Icon,
   Title,
   Right,
-  CardItem,
 } from 'native-base';
 import CardComponent from '../../components/Card';
 import {connect} from 'react-redux';
@@ -21,7 +26,6 @@ import {createStructuredSelector} from 'reselect';
 import {home} from './actions';
 import * as selectors from './seletcors';
 import {clearData} from '../Profile/actions';
-import {Assets} from '../../asset';
 import NavigationService from '../../NavigationService';
 import Notif from '../../components/Notif';
 import {fetchProfile} from '../Profile/actions';
@@ -55,7 +59,7 @@ class Home extends Component {
   };
 
   render() {
-    const {data, profile} = this.props;
+    const {data, profile, navigation} = this.props;
     console.log('DATA HOME', data, profile);
     return (
       <Container style={styles.container}>
@@ -70,22 +74,44 @@ class Home extends Component {
           </Right>
         </Header>
         <ScrollView>
-          <Text style={{fontSize: 20}}>Selamat Datang</Text>
-          <Text style={{fontSize: 15}}>
-            Silahkan berbelanja berdasarkan kebutuhan anda
-          </Text>
+          <View style={{margin: 10}}>
+            <Text style={{fontSize: 20}}>Selamat Datang</Text>
+            <Text style={{fontSize: 15}}>
+              Silahkan berbelanja berdasarkan kebutuhan anda
+            </Text>
+          </View>
           <View>
             {profile == null ? (
               <Notif text="[INFO] Lengkapi Profil Untuk Melengkapi Pembayaran" />
             ) : null}
             <View>
-              <FlatList
-                vertical
-                style={{height: Dimensions.get('window').width * 1}}
-                data={data}
-                keyExtractor={(item, index) => item.category.toString()}
-                renderItem={item => this.renderItem(item)}
-              />
+              <Text style={{margin: 10}}>Komoditi Tersedia</Text>
+              <Card>
+                <TouchableOpacity
+                  style={{
+                    flexDirection: 'row',
+                    justifyContent: 'space-between',
+                  }}
+                  onPress={() =>
+                    navigation.navigate('category', {category: 'palawija'})
+                  }>
+                  <Text>Palawija</Text>
+                  <Text> > </Text>
+                </TouchableOpacity>
+              </Card>
+              <Card>
+                <TouchableOpacity
+                  style={{
+                    flexDirection: 'row',
+                    justifyContent: 'space-between',
+                  }}
+                  onPress={() =>
+                    navigation.navigate('category', {category: 'beras'})
+                  }>
+                  <Text>Beras</Text>
+                  <Text> > </Text>
+                </TouchableOpacity>
+              </Card>
             </View>
           </View>
         </ScrollView>
@@ -130,7 +156,4 @@ const mapStateToProps = createStructuredSelector({
   profile: profile.getDataProfile(),
 });
 
-export default connect(
-  mapStateToProps,
-  {home, clearData, fetchProfile},
-)(Home);
+export default connect(mapStateToProps, {home, clearData, fetchProfile})(Home);
