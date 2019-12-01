@@ -23,9 +23,12 @@ class Cart extends Component {
     super(props);
     this.state = {
       clicks: 0,
+      cart: [],
+      checked: false,
     };
     this.incrementItem = this.incrementItem.bind(this);
     this.decrementItem = this.decrementItem.bind(this);
+    this.handleChecked = this.handleChecked.bind(this);
   }
 
   updateValue = value => {
@@ -53,27 +56,53 @@ class Cart extends Component {
     deleteCart(id);
   };
 
-  handleBuy = id => {
+  handleBuy = () => {
     const {checkoutCart} = this.props;
+    const {cart} = this.state;
     // const arrPayload = id;
     // const payload = arrPayload.split();
     // console.log('PAYLOAD', payload);
     // checkoutCart(payload);
-    checkoutCart(id);
+    // checkoutCart(id);
+    checkoutCart(cart);
     NavigationService.navigate('payment');
     // console.log('PAYLOAD', id);
   };
 
-  renderItem = ({item}) => (
-    <CardContent
-      id={item._id}
-      product_id={item.product_id}
-      product_name={item.product_name}
-      amount={item.amount}
-      eventDelete={() => this.handleDelete(item._id)}
-      eventBuy={() => this.handleBuy(item._id)}
-    />
-  );
+  addCart = id => {
+    const {cart} = this.state;
+    console.log('CART', cart);
+    const selectedId = cart.findIndex(item => item == id);
+    if (selectedId === -1) {
+      const idProduct = id.toString();
+      cart.push(idProduct);
+    } else {
+      cart.splice(selectedId, 1);
+    }
+  };
+
+  handleChecked = () => {
+    console.log('CHECKED', this.state.checked);
+    this.setState(prevState => ({
+      checked: !prevState.checked,
+    }));
+  };
+
+  renderItem = ({item}) => {
+    const length = this.state.cart.length;
+    return (
+      <CardContent
+        id={item._id}
+        product_id={item.product_id}
+        product_name={item.product_name}
+        amount={item.amount}
+        eventDelete={() => this.handleDelete(item._id)}
+        // eventBuy={() => this.handleBuy(item._id)}
+        eventAdd={() => this.addCart(item._id)}
+        cart={length}
+      />
+    );
+  };
 
   render() {
     const {data} = this.props;
@@ -100,6 +129,16 @@ class Cart extends Component {
           </View>
         </ScrollView>
         <Content />
+        <Button
+          block
+          success
+          style={{marginTop: 5}}
+          onPress={() => this.handleBuy()}>
+          <Text
+            style={{textAlign: 'center', color: 'white', fontWeight: 'bold'}}>
+            Checkout
+          </Text>
+        </Button>
       </Container>
     );
   }
@@ -110,7 +149,6 @@ const mapStateToProps = createStructuredSelector({
   url: selectors.getUrl(),
 });
 
-export default connect(
-  mapStateToProps,
-  {fetchCart, deleteCart, checkoutCart},
-)(Cart);
+export default connect(mapStateToProps, {fetchCart, deleteCart, checkoutCart})(
+  Cart,
+);

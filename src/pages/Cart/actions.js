@@ -50,7 +50,10 @@ export const checkoutCart = idProduct => (dispatch, getState) => {
   const state = getState().login;
   const {token} = state;
 
-  const payload = {cart_id: [idProduct]};
+  const payload = {cart_id: idProduct};
+  // const payload = {cart_id: [idProduct]};
+
+  console.log('ID', idProduct);
 
   cartApi
     .patchPayment(payload, token.token)

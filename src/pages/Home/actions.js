@@ -14,7 +14,7 @@ export function setErrors(errors) {
   return {
     type: SET_ERROR,
     errors,
-  };
+  };  
 }
 
 export function setLoading(status) {
@@ -27,6 +27,8 @@ export function setLoading(status) {
 export const home = () => (dispatch, getState) => {
   const state = getState().login;
   const {token} = state;
+
+  console.log('TOKENNN', token.token);
 
   homeApi
     .home(token.token)

@@ -1,5 +1,5 @@
 import React, {Component} from 'react';
-import {View, FlatList, StyleSheet, ScrollView} from 'react-native';
+import {View, FlatList, StyleSheet, ScrollView, Image} from 'react-native';
 import {Text} from 'react-native-elements';
 import {
   Container,
@@ -18,20 +18,21 @@ import {createStructuredSelector} from 'reselect';
 
 import * as actions from './actions';
 import * as selectors from './selectors';
-import CardComponent from '../../components/Category';
+import Categories from '../../components/Categories';
 
 class Home extends Component {
   componentDidMount() {
     const {categoryData, navigation} = this.props;
     categoryData(navigation.state.params.category);
+    console.log('CATEGORY', navigation.state.params.category);
   }
 
   keyExtractor = () => item => item.id;
 
   renderItem = ({item}) => (
-    <CardComponent
+    <Categories
+      image={item.productImage}
       name={item.name}
-      image={item.image}
       stock={item.stock}
       price={item.price}
       onPress={() =>
@@ -44,6 +45,7 @@ class Home extends Component {
   );
   render() {
     const {data} = this.props;
+    console.log('DATASSSS', data);
     return (
       <Container style={styles.container}>
         <Header>
@@ -106,7 +108,4 @@ const styles = StyleSheet.create({
   },
 });
 
-export default connect(
-  mapStateToProps,
-  actions,
-)(Home);
+export default connect(mapStateToProps, actions)(Home);

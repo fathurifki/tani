@@ -1,5 +1,6 @@
 import {SET_DATA, SET_LOADING, SET_ERROR} from './constants';
 import {sellProductApi} from '../../services/api/sell';
+import NavigationService from '../../NavigationService';
 
 export function setData(field, value) {
   return {
@@ -54,6 +55,7 @@ export const sellProduct = data => (dispatch, getState) => {
     .then(response => {
       if (response) {
         console.log('SUKSES CREATE');
+        NavigationService.navigate('home');
       }
     })
     .catch(error => {

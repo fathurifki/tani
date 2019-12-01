@@ -109,6 +109,7 @@ class DetailProduct extends Component {
           </View>
           <Text>Jumlah</Text>
           <TextInput
+            keyboardType="numeric"
             onChangeText={value => {
               setData('amount', value);
             }}
@@ -140,7 +141,4 @@ const mapStateToProps = createStructuredSelector({
     productImage: req.file.path
  */
 
-export default connect(
-  mapStateToProps,
-  actions,
-)(DetailProduct);
+export default connect(mapStateToProps, actions)(DetailProduct);
