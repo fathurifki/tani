@@ -104,7 +104,7 @@ class Profile extends Component {
             }>
             <ScrollView>
               <Tab1
-                userid={data.user_id}
+                userid={data && data.user_id ? data.user_id : null}
                 name={data && data.name ? data.name : null}
                 numberPhone={
                   data && data.phone_number ? data.phone_number : null
