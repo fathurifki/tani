@@ -60,7 +60,7 @@ export const sellProduct = data => (dispatch, getState) => {
     })
     .catch(error => {
       if (error) {
-        console.log(error);
+        console.log('ERROR', error);
         console.log('FAILED CREATE');
       }
     });

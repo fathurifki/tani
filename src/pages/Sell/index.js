@@ -127,6 +127,7 @@ class Sell extends Component {
                 <Picker
                   selectedValue={this.state.category}
                   onValueChange={this.updateCategory}>
+                  <Picker.Item label="Pilih Kategori" />
                   <Picker.Item label="Palawija" value="palawija" />
                   <Picker.Item label="Beras" value="beras" />
                   <Picker.Item label="Buah" value="buah" />
