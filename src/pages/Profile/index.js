@@ -26,6 +26,7 @@ import {
   getPaymentStatus,
   setDataUser,
   updateProfile,
+  createProfile,
 } from './actions';
 import * as selectors from './selectors';
 import {createStructuredSelector} from 'reselect';
@@ -38,13 +39,13 @@ class Profile extends Component {
   }
 
   handleUpdate = id => {
-    const {updateProfile} = this.props;
-    updateProfile(id);
+    const {updateProfile: _update} = this.props;
+    _update(id);
   };
 
   handleCreate = () => {
-    const {createProfile} = this.props;
-    createProfile();
+    const {createProfile: _create} = this.props;
+    _create();
   };
 
   keyExtractor = () => item => item._id;
@@ -129,11 +130,11 @@ class Profile extends Component {
                 inputHp={value => {
                   setDataUser('phone_number', value);
                 }}
+                inputAddress={value => {
+                  setDataUser('address', value);
+                }}
                 inputCity={value => {
                   setDataUser('city', value);
-                }}
-                inputAdress={value => {
-                  setDataUser('address', value);
                 }}
                 inputBank1={value => {
                   setDataUser('rekening_name1', value);
@@ -166,5 +167,5 @@ const mapStateToProps = createStructuredSelector({
 
 export default connect(
   mapStateToProps,
-  {fetchProfile, getPaymentStatus, setDataUser, updateProfile},
+  {fetchProfile, getPaymentStatus, setDataUser, updateProfile, createProfile},
 )(Profile);

@@ -32,6 +32,9 @@ export default class ComponentProfile extends Component {
       eventCreate,
       onPress,
     } = this.props;
+    console.log('USER', userid === null);
+    const titleButton = userid === null ? 'Create' : 'Update';
+    const eventButton = userid === null ? eventCreate : eventUpdate;
     return (
       <View>
         <TouchableOpacity onPress={onPress}>
@@ -61,24 +64,24 @@ export default class ComponentProfile extends Component {
             />
           </View>
           <View>
-            <Text>Kota </Text>
-            <TextInput
-              onChangeText={inputCity}
-              placeholder="Contoh : Yogykarta"
-              underlineColorAndroid="rgb(255,0,0)"
-              autoCorrect={false}
-              defaultValue={city}
-            />
-          </View>
-          <View>
-            <Text>Alamat </Text>
-            <TextInput
-              onChangeText={inputAddress}
-              placeholder="Contoh : Kemranjen Demangan "
-              underlineColorAndroid="rgb(255,0,0)"
-              autoCorrect={false}
-              defaultValue={address}
-            />
+            <View>
+              <Text>Alamat </Text>
+              <TextInput
+                onChangeText={inputAddress}
+                placeholder="Contoh : Kemranjen Demangan "
+                underlineColorAndroid="rgb(255,0,0)"
+                autoCorrect={false}
+                defaultValue={address}
+              />
+              <Text>Kota </Text>
+              <TextInput
+                onChangeText={inputCity}
+                placeholder="Contoh : Yogykarta"
+                underlineColorAndroid="rgb(255,0,0)"
+                autoCorrect={false}
+                defaultValue={city}
+              />
+            </View>
           </View>
         </Card>
         <Card style={styles.boxWithShadow}>
@@ -90,7 +93,7 @@ export default class ComponentProfile extends Component {
             autoCorrect={false}
             defaultValue={firstbank}
           />
-          <View style={{flexDirection: 'row', marginTop: 5}}></View>
+          <View style={{flexDirection: 'row', marginTop: 5}} />
           <Text>No. Rekening </Text>
           <TextInput
             onChangeText={inputNumberRek1}
@@ -116,11 +119,7 @@ export default class ComponentProfile extends Component {
             defaultValue={secondRek}
           />
         </Card>
-        {{userid} == null ? (
-          <Button title="Create" onPress={eventCreate} />
-        ) : (
-          <Button title="Update" onPress={eventUpdate} />
-        )}
+        <Button title={titleButton} onPress={eventButton} />
       </View>
     );
   }

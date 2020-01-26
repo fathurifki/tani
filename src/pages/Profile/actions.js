@@ -8,6 +8,7 @@ import {
 import {profileApi} from '../../services/api/profile';
 import {logoutService} from '../../utils/logoutService';
 import {paymentStatusApi} from '../../services/api/paymentstatus';
+import NavigationService from '../../NavigationService';
 
 export function setData(field, value) {
   return {
@@ -18,6 +19,7 @@ export function setData(field, value) {
 }
 
 export function setDataUser(field, value) {
+  console.log('TEST', field, value);
   return {
     type: SET_DATA_USER,
     field,
@@ -81,6 +83,7 @@ export const updateProfile = id => (dispatch, getState) => {
     .then(response => {
       if (response) {
         console.log('DATA UPDATE', response.data);
+        NavigationService.navigate('home');
         dispatch(fetchProfile());
         console.log('SUKSES UPDATE PROFILE');
       }
@@ -99,10 +102,14 @@ export const createProfile = () => (dispatch, getState) => {
     profile: {user},
   } = getState();
 
+  console.log('USER', user);
+
   profileApi
     .createProfile(user, token.token)
     .then(response => {
       if (response) {
+        NavigationService.navigate('home');
+        dispatch(fetchProfile());
         console.log('DATA CREATE', response.data);
         console.log('SUKSES CREATE PROFILE');
       }

@@ -33,9 +33,9 @@ import * as profile from '../Profile/selectors';
 
 class Home extends Component {
   componentDidMount() {
-    const {home: homeActions, fetchProfile: profile} = this.props;
+    const {home: homeActions, fetchProfile: _profile} = this.props;
     homeActions();
-    profile();
+    _profile();
   }
 
   renderItem = ({item}) => (
@@ -81,7 +81,7 @@ class Home extends Component {
             </Text>
           </View>
           <View>
-            {profile == null ? (
+            {profile === null ? (
               <Notif text="[INFO] Lengkapi Profil Untuk Melengkapi Pembayaran" />
             ) : null}
             <View>
@@ -156,4 +156,7 @@ const mapStateToProps = createStructuredSelector({
   profile: profile.getDataProfile(),
 });
 
-export default connect(mapStateToProps, {home, clearData, fetchProfile})(Home);
+export default connect(
+  mapStateToProps,
+  {home, clearData, fetchProfile},
+)(Home);
