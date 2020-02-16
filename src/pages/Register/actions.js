@@ -1,3 +1,4 @@
+import {ToastAndroid} from 'react-native';
 import {SET_DATA, SET_ERROR, SET_LOADING} from './constants';
 import {registeredApi} from '../../services/api/register';
 import NavigationService from '../../NavigationService';
@@ -35,11 +36,16 @@ export const register = () => (dispatch, getState) => {
       if (response) {
         console.log('RESPONSE REGISTER');
         console.log('SUKSESS REGISTER');
+        ToastAndroid.show('Berhasil Membuat Akun !', ToastAndroid.SHORT);
         NavigationService.navigate('login');
       }
     })
     .catch(error => {
       if (error) {
+        ToastAndroid.show(
+          error ? error.data : 'Akun sudah tersedia',
+          ToastAndroid.SHORT,
+        );
         console.log('FAIL REGISTER');
       }
     });
