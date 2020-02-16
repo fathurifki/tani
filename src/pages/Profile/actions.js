@@ -1,3 +1,4 @@
+import {ToastAndroid} from 'react-native';
 import {
   SET_DATA,
   SET_LOADING,
@@ -84,6 +85,7 @@ export const updateProfile = id => (dispatch, getState) => {
       if (response) {
         console.log('DATA UPDATE', response.data);
         NavigationService.navigate('home');
+        ToastAndroid.show('Berhasil Merubah Profile !', ToastAndroid.SHORT);
         dispatch(fetchProfile());
         console.log('SUKSES UPDATE PROFILE');
       }
@@ -91,6 +93,10 @@ export const updateProfile = id => (dispatch, getState) => {
     .catch(error => {
       if (error) {
         console.log('ERROR', error);
+        ToastAndroid.show(
+          'Gagal Merubah Profile !, Cek Kembali',
+          ToastAndroid.SHORT,
+        );
         console.log('FAILED UPDATE DATA PROFILE');
       }
     });
@@ -111,12 +117,17 @@ export const createProfile = () => (dispatch, getState) => {
         NavigationService.navigate('home');
         dispatch(fetchProfile());
         console.log('DATA CREATE', response.data);
+        ToastAndroid.show('Berhasil Membuat Profile !', ToastAndroid.SHORT);
         console.log('SUKSES CREATE PROFILE');
       }
     })
     .catch(error => {
       if (error) {
         console.log('ERROR', error);
+        ToastAndroid.show(
+          'Gagal Membuat Profile, Cek kembali !',
+          ToastAndroid.SHORT,
+        );
         console.log('FAILED CREATE PROFILE');
       }
     });
