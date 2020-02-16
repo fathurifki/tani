@@ -1,3 +1,4 @@
+import {ToastAndroid} from 'react-native';
 import {SET_DATA, SET_LOADING, SET_ERROR} from './constants';
 import {sellProductApi} from '../../services/api/sell';
 import NavigationService from '../../NavigationService';
@@ -55,12 +56,14 @@ export const sellProduct = data => (dispatch, getState) => {
     .then(response => {
       if (response) {
         console.log('SUKSES CREATE');
+        ToastAndroid.show('Berhasil Menjual Barang !', ToastAndroid.SHORT);
         NavigationService.navigate('home');
       }
     })
     .catch(error => {
       if (error) {
         console.log('ERROR', error);
+        ToastAndroid.show('Cek Kembali !', ToastAndroid.SHORT);
         console.log('FAILED CREATE');
       }
     });
