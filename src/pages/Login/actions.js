@@ -1,3 +1,4 @@
+import {ToastAndroid} from 'react-native';
 import {SET_DATA, SET_ERROR, SET_LOADING, CLEAR_LOGIN} from './constants';
 import {authApi} from '../../services/api/auth';
 import NavigationService from '../../NavigationService';
@@ -40,11 +41,17 @@ export const dataLogin = () => (dispatch, getState) => {
       if (response) {
         dispatch(setData('token', response.data));
         dispatch(setData('tokenDelete', response.data));
+        console.log('RESPONSE', response);
+        ToastAndroid.show('Berhasil Login !', ToastAndroid.SHORT);
         NavigationService.navigate('home');
       }
     })
     .catch(error => {
       if (error) {
+        ToastAndroid.show(
+          'ID/Password salah silahkan ulangi !',
+          ToastAndroid.SHORT,
+        );
         console.log('FAILED');
       }
     });
