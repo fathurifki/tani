@@ -1,3 +1,4 @@
+import {ToastAndroid} from 'react-native';
 import {SET_DATA, SET_LOADING, SET_ERROR} from './constants';
 import {detailProductApi} from '../../services/api/detailProduct';
 import {buyProductApi} from '../../services/api/buyProduct';
@@ -89,6 +90,7 @@ export const addProduct = id => (dispatch, getState) => {
     .then(response => {
       if (response) {
         console.log('DATA', response.data);
+        ToastAndroid.show('Sukses menambahkan Produk !', ToastAndroid.SHORT);
         console.log('SUKSESS ADD TO CART');
         NavigationService.navigate('home');
       }
