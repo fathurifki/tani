@@ -1,5 +1,5 @@
 import React, {Component} from 'react';
-import {View, Dimensions, ScrollView, FlatList} from 'react-native';
+import {View, ScrollView, FlatList, ToastAndroid} from 'react-native';
 import {Text} from 'react-native-elements';
 import {
   Header,
@@ -49,36 +49,38 @@ class Cart extends Component {
   }
 
   handleDelete = id => {
-    const {deleteCart} = this.props;
+    const {deleteCart: _delete} = this.props;
     // const arrPayload = id;
     // const payload = arrPayload.split();
     // console.log('PAYLOAD', payload);
-    deleteCart(id);
+    _delete(id);
   };
 
   handleBuy = () => {
-    const {checkoutCart} = this.props;
+    const {checkoutCart: _checkout} = this.props;
     const {cart} = this.state;
     // const arrPayload = id;
     // const payload = arrPayload.split();
     // console.log('PAYLOAD', payload);
     // checkoutCart(payload);
     // checkoutCart(id);
-    checkoutCart(cart);
+    _checkout(cart);
     NavigationService.navigate('payment');
     // console.log('PAYLOAD', id);
   };
 
-  addCart = id => {
+  addCart = (id, product) => {
     const {cart} = this.state;
     console.log('CART', cart);
-    const selectedId = cart.findIndex(item => item == id);
+    const selectedId = cart.findIndex(item => item === id);
     if (selectedId === -1) {
       const idProduct = id.toString();
+      ToastAndroid.show(`Anda menambahkan ${product}`, ToastAndroid.SHORT);
       cart.push(idProduct);
     } else {
       cart.splice(selectedId, 1);
     }
+    this.setState({cart});
   };
 
   handleChecked = () => {
@@ -98,7 +100,7 @@ class Cart extends Component {
         amount={item.amount}
         eventDelete={() => this.handleDelete(item._id)}
         // eventBuy={() => this.handleBuy(item._id)}
-        eventAdd={() => this.addCart(item._id)}
+        eventAdd={() => this.addCart(item._id, item.product_name)}
         cart={length}
       />
     );
@@ -106,6 +108,7 @@ class Cart extends Component {
 
   render() {
     const {data} = this.props;
+    console.log('ADD STATE CART', this.state.cart);
     return (
       <Container>
         <Header>
@@ -149,6 +152,7 @@ const mapStateToProps = createStructuredSelector({
   url: selectors.getUrl(),
 });
 
-export default connect(mapStateToProps, {fetchCart, deleteCart, checkoutCart})(
-  Cart,
-);
+export default connect(
+  mapStateToProps,
+  {fetchCart, deleteCart, checkoutCart},
+)(Cart);
